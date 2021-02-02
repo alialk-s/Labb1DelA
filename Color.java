@@ -1,6 +1,6 @@
 package bobo;
 
 public enum Color {
-    black, red;
+    black, red, green;
     //..  maybe more colors
 }

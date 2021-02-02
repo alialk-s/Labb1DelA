@@ -104,6 +104,10 @@ public abstract class Car {
         currentSpeed = 0;
     }
 
+    public String toString() {
+        return this.modelName;
+    }
+
 
     /**
      * A method that makes the user to increase car's speed
