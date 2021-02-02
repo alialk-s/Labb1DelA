@@ -10,7 +10,7 @@ package bobo;
  * @since   2021-01-22
  */
 public class Volvo240 extends Car implements Movable{
-    public final static double trimFactor = 1.25;
+    private final static double trimFactor = 1.25;
 
 
     public Volvo240(){
