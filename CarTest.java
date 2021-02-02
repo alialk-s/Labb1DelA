@@ -1,10 +1,9 @@
-import bobo.Car;
-import bobo.Color;
-import bobo.Saab95;
-import bobo.Volvo240;
+import bobo.*;
 import org.junit.Test;
 
 import java.security.InvalidParameterException;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.Assert.*;
 
