@@ -41,7 +41,7 @@ public class CarTransport extends Truck implements Movable{
             throw new IllegalStateException("Car is moving");
 
         rampUp = false;
-        changePlatformsPosition(0);
+        changePlatformsPosition(70);
     }
 
     /**
