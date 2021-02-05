@@ -28,7 +28,7 @@ public abstract class Truck extends Car {
 
     /**
      * A method to get the speed factor of a truck
-     * @return
+     * @return speed factor of the truck
      */
     @Override
     protected double speedFactor() {
@@ -40,7 +40,7 @@ public abstract class Truck extends Car {
      * A method to (re)set the value of platform's angle where the value must be with in the interval 0 - 70 degree
      * <p>
      * Also, the truck must be in sleep mode, i.e. its speed must be zero, to be able to change platform's position
-     * @param angle double
+     * @param angle desired angle
      */
     public void changePlatformsPosition(double angle) {
         if (getCurrentSpeed() != 0)
