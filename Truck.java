@@ -43,17 +43,12 @@ public abstract class Truck extends Car {
      * @param angle double
      */
     public void changePlatformsPosition(double angle) {
-
-        if (getCurrentSpeed() == 0) {
-            if (angle >= 0 && angle <= 70) {
-                platformAngle = angle;
-            } else {
-                throw new InvalidParameterException("Invalid Angle");
-            }
-        }
-        else {
+        if (getCurrentSpeed() != 0)
             throw new IllegalStateException("Car is moving");
-        }
+        if (angle < 0 || angle > 70)
+            throw new InvalidParameterException("Invalid Angle");
+
+        platformAngle = angle;
     }
 
 }
