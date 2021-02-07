@@ -1,5 +1,6 @@
 package bobo;
 
+import java.security.InvalidParameterException;
 import java.util.Stack;
 
 /**
@@ -19,13 +20,29 @@ public class CarTransport extends Truck implements Movable{
     public CarTransport(int rampCapacity) {
         super(100, 2, "Car Transport");
         this.rampCapacity = rampCapacity;
-        setRampUpp();
+        setRampUp();
+    }
+
+    /**
+     * An overridden method that change platform's angle
+     * <p>
+     * Car transport's angle either 0 or 70
+     * @param angle desired angle
+     */
+    @Override
+    public void changePlatformsPosition(double angle) {
+        if (getCurrentSpeed() != 0)
+            throw new IllegalStateException("Car is moving");
+        if (angle != 0 && angle != 70)
+            throw new InvalidParameterException("Invalid Angle");
+
+        setPlatformAngle(angle);
     }
 
     /**
      * A method to set the ramp up
      */
-    public void setRampUpp () {
+    public void setRampUp() {
         if (this.getCurrentSpeed()!=0)
             throw new IllegalStateException("Car is moving");
 
@@ -104,7 +121,7 @@ public class CarTransport extends Truck implements Movable{
      */
     @Override
     public void move() {
-        if (getRamp()) {
+        if (rampUp) {
             setX(getX() + getCurrentSpeed() * getDx());
             setY(getY() + getCurrentSpeed() * getDy());
             for (Car car : transportCars) {

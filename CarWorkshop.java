@@ -30,22 +30,22 @@ public class CarWorkshop <T extends Car> {
      * @return true if car is loaded, false otherwise
      */
     public boolean loadVehicle (T car) {
-        if (this.cars.size()<maxNumber) {
+        if (cars.size()<maxNumber) {
             cars.add(car);
         }
-        return this.cars.contains(car);
+        return cars.contains(car);
     }
 
     /**
      * A method to bring out an (already loaded) vehicle
      * @param car the car that we want to bring out
-     * @return  model name of car
+     * @return car that will be brought
      */
     public T bringVehicle (T car) {
-        if (!this.cars.contains(car)) {
+        if (!cars.contains(car)) {
             throw new InvalidParameterException("There is no such a car!");
         }
-        this.cars.remove(car);
+        cars.remove(car);
         return car;
 
     }
