@@ -25,6 +25,10 @@ public abstract class Truck extends Car {
         return platformAngle;
     }
 
+    public void setPlatformAngle(double platformAngle) {
+        this.platformAngle = platformAngle;
+    }
+
 
     /**
      * A method to get the speed factor of a truck
