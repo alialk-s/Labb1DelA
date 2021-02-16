@@ -1,5 +1,7 @@
 package bobo;
 
+import java.awt.*;
+
 /**
  * Class Saab95 represents a certain model of Saab cars, and extends the abstract class Car.
  * <p>
@@ -18,7 +20,6 @@ public class Saab95 extends Car implements Movable{
         setTurboOff();
     }
 
-
     /**
      *  A method to turn on the turbo
      */
@@ -34,20 +35,22 @@ public class Saab95 extends Car implements Movable{
     }
 
     /**
-     * A method to calculate the speed factor in saab95 depending on the turbo is on/off
+     * A method to calculate the speed factor in saab95 depending on if the turbo is on/off
      * @return speed factor of saab95
      */
     @Override
     protected double speedFactor(){
         double turbo = 1;
-        if(turboOn) turbo = 1.3;
+        if(turboOn)
+            turbo = 1.3;
         return getEnginePower() * 0.01 * turbo;
     }
 
-    /**
-     * A method to change the location of the car, in x-coordinate and y-coordinate, depending on car's speed
-     */
 
+    /**
+     * A method, overridden from the interface Movable, to make Saab move
+     */
+    @Override
     public void move() {
         setX(getX() + getCurrentSpeed()*getDx());
         setY(getY() + getCurrentSpeed()*getDy());
@@ -56,6 +59,7 @@ public class Saab95 extends Car implements Movable{
     /**
      * A method to turn the car into the left
      */
+    @Override
     public void turnLeft() {
 
     }
@@ -63,9 +67,8 @@ public class Saab95 extends Car implements Movable{
     /**
      * A method to turn the car into the right
      */
+    @Override
     public void turnRight() {
 
     }
-
-
 }

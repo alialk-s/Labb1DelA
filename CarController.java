@@ -1,3 +1,5 @@
+package bobo;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -21,7 +23,7 @@ public class CarController {
     // The frame that represents this instance View of the MVC pattern
     CarView frame;
     // A list of cars, modify if needed
-    ArrayList<ACar> cars = new ArrayList<>();
+    ArrayList<Car> cars = new ArrayList<>();
 
     //methods:
 
@@ -30,6 +32,8 @@ public class CarController {
         CarController cc = new CarController();
 
         cc.cars.add(new Volvo240());
+        cc.cars.add(new Saab95());
+        cc.cars.add(new Scania());
 
         // Start a new view and send a reference of self
         cc.frame = new CarView("CarSim 1.0", cc);
@@ -41,13 +45,46 @@ public class CarController {
     /* Each step the TimerListener moves all the cars in the list and tells the
     * view to update its images. Change this method to your needs.
     * */
-    private class TimerListener implements ActionListener {
+    private class TimerListener implements ActionListener {  //////Improvement needed
         public void actionPerformed(ActionEvent e) {
-            for (ACar car : cars) {
-                car.move();
-                int x = (int) Math.round(car.getPosition().getX());
-                int y = (int) Math.round(car.getPosition().getY());
-                frame.drawPanel.moveit(x, y);
+            for (Car car : cars) {
+                int x = (int) Math.round(car.getX());
+                int y = (int) Math.round(car.getY());
+                if (car instanceof Volvo240) {
+                    Volvo240 volvo240 = (Volvo240) car;
+                    volvo240.move();
+                    frame.drawPanel.moveit(x, y, volvo240);
+                } else if (car instanceof Saab95) {
+                    Saab95 saab95 = (Saab95) car;
+                    saab95.move();
+                    frame.drawPanel.moveit(x, y+100, saab95);
+                } else if (car instanceof Scania) {
+                    Scania scania = (Scania) car;
+                    scania.move();
+                    frame.drawPanel.moveit(x, y+200, scania);
+                }
+
+
+
+                if (car.getX()>frame.getHeight()-120 || car.getX()<0) {
+                    car.setDx(car.getDx()*-1);
+                }
+                /*
+                if (car instanceof Volvo240) {
+                    Volvo240 volvo240 = (Volvo240) car;
+                    frame.drawPanel.moveit(x, y, volvo240);
+                } else if (car instanceof Saab95) {
+                    Saab95 saab95 = (Saab95) car;
+                    frame.drawPanel.moveit(x, y+100, saab95);
+                } else if (car instanceof Scania) {
+                    Scania scania = (Scania) car;
+                    frame.drawPanel.moveit(x, y+200, scania);
+                }
+
+
+                 */
+
+
                 // repaint() calls the paintComponent method of the panel
                 frame.drawPanel.repaint();
             }
@@ -57,9 +94,65 @@ public class CarController {
     // Calls the gas method for each car once
     void gas(int amount) {
         double gas = ((double) amount) / 100;
-        for (ACar car : cars
-                ) {
+        for (Car car : cars) {
             car.gas(gas);
         }
     }
+
+    void brake (int amount) {
+        double brake = ((double)amount)/100;
+        for (Car car : cars) {
+            car.brake(brake);
+        }
+    }
+
+    void setTurboOn() {
+        for (Car car : cars) {
+            if (car instanceof Saab95) {
+                ((Saab95) car).setTurboOn();
+                System.out.println("TurboOn");
+            }
+        }
+
+    }
+    void setTurboOff() {
+        for (Car car : cars) {
+            if (car instanceof Saab95) {
+                ((Saab95) car).setTurboOff();
+                System.out.println("TurboOff");
+            }
+        }
+    }
+
+    void startAllCars() {
+        for (Car car : cars) {
+            if (car.getCurrentSpeed()==0)
+                car.startEngine();
+        }
+    }
+
+    void stopAllCars() {
+        for (Car car: cars) {
+            car.stopEngine();
+        }
+    }
+
+    void liftBed() {
+        for (Car car: cars) {
+            if (car instanceof Scania) {
+                ((Scania) car).changePlatformsPosition(70);
+                System.out.println("Lift bed");
+            }
+        }
+    }
+
+    void lowerBed(){
+        for (Car car: cars) {
+            if (car instanceof Scania) {
+                ((Scania) car).changePlatformsPosition(0);
+                System.out.println("Lower bed");
+            }
+        }
+    }
+
 }

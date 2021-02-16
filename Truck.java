@@ -25,6 +25,10 @@ public abstract class Truck extends Car {
         return platformAngle;
     }
 
+    /**
+     * A method to (re)set the platform angle
+     * @param platformAngle platform's angle value
+     */
     public void setPlatformAngle(double platformAngle) {
         this.platformAngle = platformAngle;
     }
@@ -36,7 +40,7 @@ public abstract class Truck extends Car {
      */
     @Override
     protected double speedFactor() {
-        return 0;
+        return 1.0;
     }
 
 

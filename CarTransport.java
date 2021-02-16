@@ -1,5 +1,6 @@
 package bobo;
 
+import java.awt.*;
 import java.security.InvalidParameterException;
 import java.util.Stack;
 
@@ -10,7 +11,7 @@ import java.util.Stack;
  * @since 2021-02-01
  * @version 1.0
  */
-public class CarTransport extends Truck implements Movable{
+public class CarTransport extends Truck implements Movable {
 
     private static final double VALID_DISTANCE = 2;
     private final int rampCapacity;
@@ -20,6 +21,7 @@ public class CarTransport extends Truck implements Movable{
     public CarTransport(int rampCapacity) {
         super(100, 2, "Car Transport");
         this.rampCapacity = rampCapacity;
+        setColor(Color.BLACK);
         setRampUp();
     }
 
@@ -43,29 +45,23 @@ public class CarTransport extends Truck implements Movable{
      * A method to set the ramp up
      */
     public void setRampUp() {
-        if (this.getCurrentSpeed()!=0)
-            throw new IllegalStateException("Car is moving");
-
-        rampUp = true;
         changePlatformsPosition(0);
+        rampUp = true;
     }
 
     /**
      * A method to set the ramp down
      */
     public void setRampDown() {
-        if (this.getCurrentSpeed()!=0)
-            throw new IllegalStateException("Car is moving");
-
-        rampUp = false;
         changePlatformsPosition(70);
+        rampUp = false;
     }
 
     /**
      * A method to get the value of rampUpp
      * @return Value of rampUp
      */
-    public boolean getRamp () {
+    public boolean getRamp() {
         return rampUp;
     }
 
@@ -83,6 +79,10 @@ public class CarTransport extends Truck implements Movable{
 
     }
 
+    //private boolean canLoad() ////////////////////////IMPROVEMENT NEEDED
+    //private void placeCar() /////////////////////////
+
+
 
     /**
      * A method to load up a car under certain conditions
@@ -92,12 +92,11 @@ public class CarTransport extends Truck implements Movable{
      * @return true if the car is loaded, false otherwise
      */
     public boolean loadCar(Car car) {
-        if (!getRamp() && getCurrentSpeed()==0) {
+        if (!rampUp && getCurrentSpeed()==0) {
 
             if (!(car instanceof CarTransport) && transportCars.size()<rampCapacity && validDistance(car))
                 transportCars.push(car);
         }
-
         return transportCars.contains(car);
 
     }
@@ -107,7 +106,7 @@ public class CarTransport extends Truck implements Movable{
      * A method to unload all the cars that have been loaded on the car transport and putting them in valid distances
      */
     public void unloadCars() {
-        if (getRamp() && getCurrentSpeed()==0) {
+        if (!rampUp && getCurrentSpeed()==0) {
            while (!transportCars.empty()) {
                Car currentCar = transportCars.pop();
                currentCar.setX(this.getX()+ VALID_DISTANCE + 2*transportCars.size());
@@ -116,14 +115,19 @@ public class CarTransport extends Truck implements Movable{
         }
     }
 
-    /**
+    /*/**
      * An overridden method to move the car transport with respect to changing the positions of all cars loaded on it
+     */
+
+    /**
+     * A method, overridden from the interface Movable, to make Car transport move
      */
     @Override
     public void move() {
         if (rampUp) {
-            setX(getX() + getCurrentSpeed() * getDx());
-            setY(getY() + getCurrentSpeed() * getDy());
+            //super.move();
+            setX(getX() + getCurrentSpeed()*getDx());
+            setY(getY() + getCurrentSpeed()*getDy());
             for (Car car : transportCars) {
                 car.setX(this.getX());
                 car.setY(this.getY());
@@ -131,11 +135,17 @@ public class CarTransport extends Truck implements Movable{
         }
     }
 
+    /**
+     * A method to turn the car into the left
+     */
     @Override
     public void turnLeft() {
 
     }
 
+    /**
+     * A method to turn the car into the right
+     */
     @Override
     public void turnRight() {
 
